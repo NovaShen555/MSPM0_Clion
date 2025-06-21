@@ -1,0 +1,7 @@
+CompileFlags:
+  Add:
+    - "-isystem"
+    - "C:/ti/gcc_arm_none_eabi_9_2_1/arm-none-eabi/include"
+    - "C:/ti/gcc_arm_none_eabi_9_2_1/lib/gcc/arm-none-eabi/9.2.1/include"
+    - "target"
+    - "cotex-m0plus"

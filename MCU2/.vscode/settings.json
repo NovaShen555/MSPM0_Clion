@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "task.h": "c",
+        "ti_msp_dl_config.h": "c",
+        "driverlib.h": "c",
+        "dl_adc12.h": "c",
+        "stdbool.h": "c",
+        "math.h": "c",
+        "reent.h": "c",
+        "bsp_iic.h": "c"
+    }
+}
