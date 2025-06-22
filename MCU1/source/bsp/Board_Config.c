@@ -2,6 +2,18 @@
 // Created by 34575 on 25-6-21.
 //
 #include <Board_Config.h>
+#include <stdint.h>
+
+
+void MSP_Delay_us(uint32_t nus) {
+    delay_cycles(nus * (CPUCLK_FREQ / 1000000));
+}
+
+void MSP_Delay_ms(uint32_t nms) {
+    for(uint32_t i = 0; i < nms; i++) {
+        MSP_Delay_us(1000); // 每毫秒延时1000微秒
+    }
+}
 
 /*******************串口重新向***********************/
 int Uprintf(UART_Regs * uart,const char *fmt, ...) {
@@ -115,14 +127,66 @@ void I2C_WR_Byte(uint16_t Addre,uint8_t *data,uint8_t len)
 
 /**************************************硬件SPI控制函数******************************** */
 
-void SPI_WR_Byte(uint8_t dat,uint8_t cmd)
-{
-    while (DL_SPI_isBusy(SPI_OLED_INST));
+// void SPI_WR_Byte(uint8_t dat,uint8_t cmd)
+// {
+//     while (DL_SPI_isBusy(SPI_OLED_INST));
 
-    if(cmd)
-        DL_SPI_setControllerCommandDataModeConfig(SPI_OLED_INST, DL_SPI_CD_MODE_DATA);
-    else
-        DL_SPI_setControllerCommandDataModeConfig(SPI_OLED_INST, DL_SPI_CD_MODE_COMMAND);
+//     if(cmd)
+//         DL_SPI_setControllerCommandDataModeConfig(SPI_OLED_INST, DL_SPI_CD_MODE_DATA);
+//     else
+//         DL_SPI_setControllerCommandDataModeConfig(SPI_OLED_INST, DL_SPI_CD_MODE_COMMAND);
 
-    DL_SPI_transmitData8(SPI_OLED_INST, dat);
-} 
+//     DL_SPI_transmitData8(SPI_OLED_INST, dat);
+// } 
+
+/********************************软件SPI接口函数******************************* */
+SSAS spi_Dev;  // 定义SPI设备指针
+
+void MSP_SPI_GPIO_Port_Init(void) {
+    
+}
+
+void MSP_SPI_SCK(uint8_t state){
+    if (state) {
+        DL_GPIO_setPins(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN);
+    } else {
+        DL_GPIO_clearPins(SOFT_SPI_SCK_PORT, SOFT_SPI_SCK_PIN);
+    }
+}
+
+void MSP_SPI_MOSI(uint8_t state){
+    if (state) {
+        DL_GPIO_setPins(SOFT_SPI_MOSI_PORT, SOFT_SPI_MOSI_PIN);
+    } else {
+        DL_GPIO_clearPins(SOFT_SPI_MOSI_PORT, SOFT_SPI_MOSI_PIN);
+    }
+}
+
+uint8_t MSP_SPI_MISO(void) {
+    return DL_GPIO_readPins(SOFT_SPI_MISO_PORT, SOFT_SPI_MISO_PIN);
+}
+
+void MSP_SPI_CS(uint8_t state){
+    if (state) {
+        DL_GPIO_setPins(SOFT_SPI_CS_PORT, SOFT_SPI_CS_PIN);
+    } else {
+        DL_GPIO_clearPins(SOFT_SPI_CS_PORT, SOFT_SPI_CS_PIN);
+    }
+}
+
+void MSP_SPI_CS2(uint8_t state){
+    if (state) {
+        DL_GPIO_setPins(SOFT_SPI_CS2_PORT, SOFT_SPI_CS2_PIN);
+    } else {
+        DL_GPIO_clearPins(SOFT_SPI_CS2_PORT, SOFT_SPI_CS2_PIN);
+    }
+}
+
+void MSP_SPI_CS3(uint8_t state){
+    if (state) {
+        DL_GPIO_setPins(SOFT_SPI_CS3_PORT, SOFT_SPI_CS3_PIN);
+    } else {
+        DL_GPIO_clearPins(SOFT_SPI_CS3_PORT, SOFT_SPI_CS3_PIN);
+    }
+}
+

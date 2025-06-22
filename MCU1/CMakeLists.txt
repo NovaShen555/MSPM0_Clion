@@ -7,10 +7,6 @@ set(CMAKE_SYSTEM_PROCESSOR cortex-m0plus)
 set(Target_Board MSPM0xx)
 set(Board_Name mspm0g3507)
 
-#ARM_GCC_TOOLCHAIN_ROOT_DIR "C:\\Users\34575\.platformio\packages\toolchain-gccarmnoneeabi\bin" # 设置交叉编译工具链的根目录,根据实际情况修改
-
-#set(ARM_GCC_TOOLCHAIN_ROOT_DIR "C:\\Users\\34575\\.platformio\\packages\\toolchain-gccarmnoneeabi\\bin")
-
 # 指定交叉编译工具链arm-none-eabi-gcc,添加到环境变量中,或者在此处直接指定绝对路径
 #set(CMAKE_C_COMPILER arm-none-eabi-gcc)
 #set(CMAKE_CXX_COMPILER arm-none-eabi-g++)

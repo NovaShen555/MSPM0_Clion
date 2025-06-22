@@ -7,24 +7,38 @@
 #include <FreeRTOS.h>
 #include <task.h>
 #include <stdio.h>
+#include <OLED.h>
 /* * 主线程函数
  * 该函数会每500毫秒切换一次LED的状态
  */
 void Main_Thread(void *pvParameters){
+    OLED_Init(); // 初始化OLED显示屏
+    uint8_t a;
     for (;;) {
-        if (Butter_Read()) {
-            printf("Butter is On\n");
-            LED_Toggle();
-        }
+        a++;
+        // OLED_Printf(0, 0, OLED_8X16, "Hello, FreeRTOS!");
+        OLED_Printf(0, 16, OLED_8X16, "Now time is %d", a);
+        OLED_Update(); // 更新OLED显示屏内容
+        // LED_Toggle();
+        vTaskDelay(pdMS_TO_TICKS(500)); // 每500毫秒切换一次LED状态
     }
 }
 
 
 int main() {
     SYSCFG_DL_init();
-    NVIC_EnableIRQ(TIMER_0_INST_INT_IRQN);
-    xTaskCreate(Main_Thread, "Main_Thread", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-    vTaskStartScheduler(); // 启动调度器
+    // NVIC_EnableIRQ(TIMER_0_INST_INT_IRQN);
+    uint8_t a;
+    OLED_Init();
+    for (;;) {
+        a++;
+        // OLED_Printf(0, 0, OLED_8X16, "Hello, FreeRTOS!");
+        OLED_Printf(0, 16, OLED_8X16, "Now time is %d", a);
+        OLED_Update(); // 更新OLED显示屏内容
+        // LED_Toggle();
+    }
+    // xTaskCreate(Main_Thread, "Main_Thread", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+    // vTaskStartScheduler(); // 启动调度器
     return 0;
 }
 
