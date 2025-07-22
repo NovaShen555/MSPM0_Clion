@@ -112,6 +112,12 @@ target_include_directories(${PROJECT_NAME}.elf PUBLIC
         include/rtos
 )
 
+target_link_libraries(${PROJECT_NAME}.elf
+        -lm      # 数学库
+        -lc      # 标准 C 库（可选）
+)
+
+
 add_definitions(
         -D__MSPM0G3507__  # 定义芯片型号
 #        -DUSE_STDPERIPH_DRIVER
